@@ -1,13 +1,8 @@
 package pl.edu.agh.hangman;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Hangman {
-
-    public static int WORD_TO_FIND_INDEX = 0;
 
     public static final String[] HANGMANPICS = new String[]{
             "  +---+\n" +
@@ -69,7 +64,9 @@ public class Hangman {
         String wordToGuess = words.getRandomWord();
 
         System.out.println(wordToGuess);
+
+        // FIXME to test only
+        WordPrinter wordPrinter = new WordPrinterSimple(wordToGuess);
+        wordPrinter.print("etoalama");
     }
-
-
 }
