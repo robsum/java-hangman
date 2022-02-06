@@ -7,7 +7,7 @@ public class Hangman {
         GameStatus hangmanPicture = new HangmanPicture();
         hangmanPicture.printLifeStatus();
 
-        Words wordsFromFile = new WordsFromFile();
+        Words wordsFromFile = new Words(new WordsFromFile(), new RandomWordChoose());
         String wordToGuess = wordsFromFile.getWord();
 
         System.out.println(wordToGuess);

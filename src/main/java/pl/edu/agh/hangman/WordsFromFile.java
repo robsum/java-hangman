@@ -4,19 +4,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.List;
 
-public class WordsFromFile implements Words {
-    // losuje i zwraca
-    // strategia do zwracania słow
-
+public class WordsFromFile implements WordsProvider{
     public final String filepath = "src/main/resources/slowa.txt";
 
-    private ArrayList<String> words;
-
-    public WordsFromFile() throws IOException {
+    @Override
+    public List<String> getWords() throws IOException {
         // read words file:
-        words = new ArrayList<>();
+        List<String> words = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(filepath));
         try {
             StringBuilder sb = new StringBuilder();
@@ -34,19 +30,7 @@ public class WordsFromFile implements Words {
         } finally {
             br.close();
         }
-    }
 
-    public static int getRandomNumber(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
-    }
-
-    public String getRandomWord() {
-        int index = getRandomNumber(0, words.size());
-        return words.get(index);
-    }
-
-    @Override
-    public String getWord() {
-        return getRandomWord().toUpperCase(Locale.ROOT);
+        return words;
     }
 }
