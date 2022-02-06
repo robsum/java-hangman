@@ -20,17 +20,16 @@ public class Hangman {
         String guessedChars = new String();
 
         String ch = characterGetter.getCharacterFromUser();
-        while (!ch.equals("Q") && hangmanPicture.isAlive()) {
+        while (hangmanPicture.isAlive()) {
             if (CharacterGuesser.isCharacterInString(ch, wordToGuess)) {
                 // print word with guessed chars
                 guessedChars = guessedChars.concat(ch);
                 wordPrinter.print(guessedChars);
-
             } else {
                 hangmanPicture.oneLifeLost();
                 hangmanPicture.printLifeStatus();
             }
-            if (hangmanPicture.isAlive()) {
+            if (!hangmanPicture.isAlive()) {
                 break;
             }
             ch = characterGetter.getCharacterFromUser();
