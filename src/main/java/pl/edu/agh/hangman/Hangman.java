@@ -2,15 +2,13 @@ package pl.edu.agh.hangman;
 
 import java.io.IOException;
 
-import java.util.Locale;
-
 public class Hangman {
     public static void main(String[] args) throws IOException {
         GameStatus hangmanPicture = new HangmanPicture();
         hangmanPicture.printLifeStatus();
 
-        Words words = new Words();
-        String wordToGuess = words.getRandomWord().toUpperCase(Locale.ROOT);
+        Words wordsFromFile = new WordsFromFile();
+        String wordToGuess = wordsFromFile.getWord();
 
         System.out.println(wordToGuess);
 
@@ -29,7 +27,7 @@ public class Hangman {
                 wordPrinter.print(guessedChars);
                 boolean allGuessed = wordAnalyzer.allGuessed(guessedChars);
                 if (allGuessed) {
-                     break;
+                    break;
                 }
 
             } else {
