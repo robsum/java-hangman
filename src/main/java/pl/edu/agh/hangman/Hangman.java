@@ -1,5 +1,7 @@
 package pl.edu.agh.hangman;
 
+import java.io.File;
+
 public class Hangman {
 
     public static final String[] HANGMANPICS = new String[]{
@@ -55,5 +57,10 @@ public class Hangman {
     };
 
     public static void main(String[] args) {
+
+        // FIXME to test only
+        String dummyWord = "testowe";
+        WordPrinter wordPrinter = new WordPrinterSimple(dummyWord);
+        wordPrinter.print("etoalama");
     }
 }
