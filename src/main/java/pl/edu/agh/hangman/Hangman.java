@@ -3,62 +3,21 @@ package pl.edu.agh.hangman;
 import java.io.IOException;
 
 public class Hangman {
-
-    public static final String[] HANGMANPICS = new String[]{
-            "  +---+\n" +
-                    "  |   |\n" +
-                    "      |\n" +
-                    "      |\n" +
-                    "      |\n" +
-                    "      |\n" +
-                    "=========",
-            "  +---+\n" +
-                    "  |   |\n" +
-                    "  O   |\n" +
-                    "      |\n" +
-                    "      |\n" +
-                    "      |\n" +
-                    "=========",
-            "  +---+\n" +
-                    "  |   |\n" +
-                    "  O   |\n" +
-                    "  |   |\n" +
-                    "      |\n" +
-                    "      |\n" +
-                    "=========",
-            "  +---+\n" +
-                    "  |   |\n" +
-                    "  O   |\n" +
-                    " /|   |\n" +
-                    "      |\n" +
-                    "      |\n" +
-                    "=========",
-            "  +---+\n" +
-                    "  |   |\n" +
-                    "  O   |\n" +
-                    " /|\\  |\n" +
-                    "      |\n" +
-                    "      |\n" +
-                    "=========",
-            "  +---+\n" +
-                    "  |   |\n" +
-                    "  O   |\n" +
-                    " /|\\  |\n" +
-                    " /    |\n" +
-                    "      |\n" +
-                    "=========",
-            "  +---+\n" +
-                    "  |   |\n" +
-                    "  O   |\n" +
-                    " /|\\  |\n" +
-                    " / \\  |\n" +
-                    "      |\n" +
-                    "========"
-    };
-
     public static void main(String[] args) throws IOException {
-        // Hangman Pics: 0 - 6
-        System.out.println(HANGMANPICS[0]);
+        //FIXME: hangman picture quick tests only
+        GameStatus hangmanPicture = new HangmanPicture();
+        hangmanPicture.printLifeStatus();
+        hangmanPicture.oneLifeLost();
+        hangmanPicture.oneLifeLost();
+        hangmanPicture.oneLifeLost();
+        hangmanPicture.oneLifeLost();
+        hangmanPicture.oneLifeLost();
+        hangmanPicture.oneLifeLost();
+        hangmanPicture.oneLifeLost();
+        hangmanPicture.oneLifeLost();
+        hangmanPicture.oneLifeLost();
+        hangmanPicture.oneLifeLost();
+        hangmanPicture.printLifeStatus();
 
         Words words = new Words();
         String wordToGuess = words.getRandomWord();
