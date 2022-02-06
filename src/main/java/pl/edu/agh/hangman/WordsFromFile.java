@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class WordsFromFile implements WordsProvider{
     public final String filepath = "src/main/resources/slowa.txt";
@@ -21,8 +22,8 @@ public class WordsFromFile implements WordsProvider{
             while (line != null) {
                 sb.append(line);
                 sb.append(System.lineSeparator());
+                words.add(line.toUpperCase());
                 line = br.readLine();
-                words.add(line);
             }
             String everything = sb.toString();
         } catch (IOException e) {
