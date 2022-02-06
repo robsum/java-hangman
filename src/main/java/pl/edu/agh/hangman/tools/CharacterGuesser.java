@@ -1,4 +1,4 @@
-package pl.edu.agh.hangman;
+package pl.edu.agh.hangman.tools;
 
 public class CharacterGuesser {
     public static boolean isCharacterInString(String character, String string) {

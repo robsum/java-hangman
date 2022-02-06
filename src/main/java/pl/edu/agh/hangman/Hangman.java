@@ -2,6 +2,9 @@ package pl.edu.agh.hangman;
 
 import pl.edu.agh.hangman.gamestatus.GameStatus;
 import pl.edu.agh.hangman.gamestatus.HangmanPicture;
+import pl.edu.agh.hangman.tools.CharacterGetter;
+import pl.edu.agh.hangman.tools.CharacterGuesser;
+import pl.edu.agh.hangman.tools.WordAnalyzer;
 import pl.edu.agh.hangman.words.*;
 import pl.edu.agh.hangman.words.printer.WordPrinter;
 import pl.edu.agh.hangman.words.printer.WordPrinterSimple;
