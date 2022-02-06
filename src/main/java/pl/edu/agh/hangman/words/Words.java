@@ -1,4 +1,7 @@
-package pl.edu.agh.hangman;
+package pl.edu.agh.hangman.words;
+
+import pl.edu.agh.hangman.words.choose.WordsChooseStrategy;
+import pl.edu.agh.hangman.words.provider.WordsProvider;
 
 import java.io.IOException;
 import java.util.List;

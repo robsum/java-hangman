@@ -1,11 +1,10 @@
-package pl.edu.agh.hangman;
+package pl.edu.agh.hangman.words.provider;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class WordsFromFile implements WordsProvider{
     public final String filepath = "src/main/resources/slowa.txt";

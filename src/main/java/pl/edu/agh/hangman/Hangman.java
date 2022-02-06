@@ -1,5 +1,13 @@
 package pl.edu.agh.hangman;
 
+import pl.edu.agh.hangman.gamestatus.GameStatus;
+import pl.edu.agh.hangman.gamestatus.HangmanPicture;
+import pl.edu.agh.hangman.words.*;
+import pl.edu.agh.hangman.words.printer.WordPrinter;
+import pl.edu.agh.hangman.words.printer.WordPrinterSimple;
+import pl.edu.agh.hangman.words.choose.RandomWordChoose;
+import pl.edu.agh.hangman.words.provider.WordsFromFile;
+
 import java.io.IOException;
 
 public class Hangman {

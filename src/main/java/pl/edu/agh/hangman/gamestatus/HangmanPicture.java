@@ -1,4 +1,4 @@
-package pl.edu.agh.hangman;
+package pl.edu.agh.hangman.gamestatus;
 
 public class HangmanPicture implements GameStatus {
     private int currentWordGuessCounter = 0;
