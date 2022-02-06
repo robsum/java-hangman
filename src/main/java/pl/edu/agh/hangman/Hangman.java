@@ -72,14 +72,19 @@ public class Hangman {
         CharacterGetter characterGetter = new CharacterGetter();
 
         WordPrinter wordPrinter = new WordPrinterSimple(wordToGuess);
-        String guessedChars = new String;
+        String guessedChars = new String("");
+
+        WordAnalyzer wordAnalyzer = new WordAnalyzer(wordToGuess);
 
         String ch = characterGetter.getCharacterFromUser();
         while (!ch.equals("Q") && wrongAnswers < 6) {
             if (CharacterGuesser.isCharacterInString(ch, wordToGuess)) {
                 // print word with guessed chars
                 guessedChars = guessedChars.concat(ch);
-                wordPrinter.print(guessedChars);
+                boolean allGuessed = wordAnalyzer.allGuessed(guessedChars);
+                if (allGuessed) {
+                     break;
+                }
 
             } else {
                 wrongAnswers++;
@@ -98,6 +103,5 @@ public class Hangman {
         }
 
 
-    }
     }
 }
