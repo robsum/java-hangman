@@ -20,7 +20,7 @@ public class Hangman {
     private LettersChecker lettersChecker;
     private String wordToGuess;
 
-    public void setUpBeforeStart() {
+    public void setUpBeforePlay() {
         hangmanPicture = new HangmanPicture();
         wordsFromFile = new Words(new WordsFromFile(), new RandomWordChoose());
         letterReader = new LetterReader();
@@ -30,10 +30,12 @@ public class Hangman {
         lettersChecker = new LettersChecker(wordToGuess);
     }
 
-    public void play() throws IOException {
+    public void showStartingScreen() {
         hangmanPicture.printLifeStatus();
         System.out.println(wordToGuess);
+    }
 
+    public void play() throws IOException {
         String guessedChars = "";
 
         String letter = letterReader.getLetterFromUser();

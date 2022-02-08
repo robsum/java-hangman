@@ -5,8 +5,9 @@ import java.io.IOException;
 public class RunApp {
     public static void main(String[] args) throws IOException {
         Hangman hangman = new Hangman();
-        hangman.setUpGame();
+        hangman.setUpBeforePlay();
+        hangman.showStartingScreen();
         hangman.play();
-        hangman.closingSetups();
+        hangman.setUpBeforeClose();
     }
 }
