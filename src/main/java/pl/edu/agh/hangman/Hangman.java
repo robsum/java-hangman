@@ -1,6 +1,6 @@
 package pl.edu.agh.hangman;
 
-import pl.edu.agh.hangman.gamestatus.GameStatus;
+import pl.edu.agh.hangman.gamestatus.PlayerStatus;
 import pl.edu.agh.hangman.gamestatus.HangmanPicture;
 import pl.edu.agh.hangman.tools.LetterReader;
 import pl.edu.agh.hangman.tools.LettersChecker;
@@ -10,10 +10,8 @@ import pl.edu.agh.hangman.words.printer.WordPrinterSimple;
 import pl.edu.agh.hangman.words.choose.RandomWordChoose;
 import pl.edu.agh.hangman.words.provider.WordsFromFile;
 
-import java.io.IOException;
-
 public class Hangman {
-    private GameStatus hangmanPicture;
+    private PlayerStatus playerStatus;
     private Words wordsFromFile;
     private LetterReader letterReader;
     private WordPrinter wordPrinter;
@@ -21,7 +19,7 @@ public class Hangman {
     private String wordToGuess;
 
     public void setUpBeforePlay() {
-        hangmanPicture = new HangmanPicture();
+        playerStatus = new HangmanPicture();
         wordsFromFile = new Words(new WordsFromFile(), new RandomWordChoose());
         letterReader = new LetterReader();
 
@@ -31,37 +29,35 @@ public class Hangman {
     }
 
     public void showStartingScreen() {
-        hangmanPicture.printLifeStatus();
-        System.out.println(wordToGuess);
+        playerStatus.printLifes();
+        System.out.printf("//%s//\n",wordToGuess); //FIXME hide this line
     }
 
-    public void play() throws IOException {
-        String guessedChars = "";
-
-        String letter = letterReader.getLetterFromUser();
-        while (hangmanPicture.isAlive()) {
-            if (lettersChecker.doesContainALetter(letter)) {
-                // print word with guessed chars
-                guessedChars = guessedChars.concat(letter);
-                wordPrinter.print(guessedChars);
-                boolean allGuessed = lettersChecker.allGuessed(guessedChars);
-                if (allGuessed) {
-                    break;
+    public void play() {
+        String allLetters = "";
+        String currentLetter = "";
+        do {
+            currentLetter = letterReader.getLetterFromUser();
+            if (lettersChecker.doesContainALetter(currentLetter)) {
+                allLetters = allLetters.concat(currentLetter);
+                wordPrinter.print(allLetters);
+                if (lettersChecker.allGuessed(allLetters)) {
+                    playerStatus.setWon();
+                    return;
                 }
             } else {
-                hangmanPicture.oneLifeLost();
-                hangmanPicture.printLifeStatus();
+                playerStatus.oneLifeLost();
+                playerStatus.printLifes();
             }
-            if (!hangmanPicture.isAlive()) {
-                break;
-            }
-            letter = letterReader.getLetterFromUser();
-        }
+        } while (playerStatus.hasLifeToPlay());
+        playerStatus.setLost();
+    }
 
-        if (!hangmanPicture.isAlive()) {
-            System.out.println("You have lost! :-(");
-        } else {
+    public void printSummary() {
+        if (playerStatus.isWinner()) {
             System.out.println("You have won! :-)");
+        } else {
+            System.out.println("You have lost! :-(");
         }
     }
 
