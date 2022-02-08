@@ -54,6 +54,8 @@ public class Hangman {
     }
 
     public void printSummary() {
+        System.out.println("------------------------\n");
+        playerStatus.printLifes();
         if (playerStatus.isWinner()) {
             System.out.println("You have won! :-)");
         } else {

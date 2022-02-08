@@ -10,6 +10,7 @@ public class LetterReader {
     public String getLetterFromUser() {
         System.out.println(USER_PROMPT);
         char ch = scanner.next().toUpperCase(Locale.ROOT).charAt(0);
+        scanner.nextLine();
         return String.valueOf(ch);
     }
 
