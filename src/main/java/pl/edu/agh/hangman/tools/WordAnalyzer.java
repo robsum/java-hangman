@@ -1,6 +1,7 @@
 package pl.edu.agh.hangman.tools;
 
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class WordAnalyzer {
     private String wordToGuess;
@@ -10,11 +11,11 @@ public class WordAnalyzer {
     }
 
     public boolean allGuessed(String guessedChars) {
-        LinkedHashSet<Character> setGuessedChars = new LinkedHashSet<>();
+        Set<Character> setGuessedChars = new LinkedHashSet<>();
         for (int i = 0; i < guessedChars.length(); ++i) {
             setGuessedChars.add(guessedChars.charAt(i));
         }
-        LinkedHashSet<Character> setWordToGuess = new LinkedHashSet<>();
+        Set<Character> setWordToGuess = new LinkedHashSet<>();
         for (int i = 0; i < wordToGuess.length(); ++i) {
             setWordToGuess.add(wordToGuess.charAt(i));
         }
@@ -26,5 +27,9 @@ public class WordAnalyzer {
             }
         }
         return actualAmount == desiredAmount;
+    }
+
+    public boolean doesContainALetter(String letter) {
+        return wordToGuess.contains(String.valueOf(letter));
     }
 }

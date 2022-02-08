@@ -2,8 +2,7 @@ package pl.edu.agh.hangman;
 
 import pl.edu.agh.hangman.gamestatus.GameStatus;
 import pl.edu.agh.hangman.gamestatus.HangmanPicture;
-import pl.edu.agh.hangman.tools.CharacterGetter;
-import pl.edu.agh.hangman.tools.CharacterGuesser;
+import pl.edu.agh.hangman.tools.LetterUserInputProvider;
 import pl.edu.agh.hangman.tools.WordAnalyzer;
 import pl.edu.agh.hangman.words.*;
 import pl.edu.agh.hangman.words.printer.WordPrinter;
@@ -23,16 +22,16 @@ public class Hangman {
 
         System.out.println(wordToGuess);
 
-        CharacterGetter characterGetter = new CharacterGetter();
+        LetterUserInputProvider letterUserInputProvider = new LetterUserInputProvider();
 
         WordPrinter wordPrinter = new WordPrinterSimple(wordToGuess);
         String guessedChars = new String("");
 
         WordAnalyzer wordAnalyzer = new WordAnalyzer(wordToGuess);
 
-        String ch = characterGetter.getCharacterFromUser();
+        String ch = letterUserInputProvider.getLetterFromUser();
         while (hangmanPicture.isAlive()) {
-            if (CharacterGuesser.isCharacterInString(ch, wordToGuess)) {
+            if (wordAnalyzer.doesContainALetter(ch)) {
                 // print word with guessed chars
                 guessedChars = guessedChars.concat(ch);
                 wordPrinter.print(guessedChars);
@@ -48,7 +47,7 @@ public class Hangman {
             if (!hangmanPicture.isAlive()) {
                 break;
             }
-            ch = characterGetter.getCharacterFromUser();
+            ch = letterUserInputProvider.getLetterFromUser();
         }
 
         if (!hangmanPicture.isAlive()) {
