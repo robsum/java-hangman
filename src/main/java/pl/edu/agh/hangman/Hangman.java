@@ -13,33 +13,39 @@ import pl.edu.agh.hangman.words.provider.WordsFromFile;
 import java.io.IOException;
 
 public class Hangman {
-    public static void main(String[] args) throws IOException {
-        GameStatus hangmanPicture = new HangmanPicture();
+    private GameStatus hangmanPicture;
+    private Words wordsFromFile;
+    private LetterReader letterReader;
+    private WordPrinter wordPrinter;
+    private LettersChecker lettersChecker;
+    private String wordToGuess;
+
+    public void setUpBeforeStart() {
+        hangmanPicture = new HangmanPicture();
+        wordsFromFile = new Words(new WordsFromFile(), new RandomWordChoose());
+        letterReader = new LetterReader();
+
+        wordToGuess = wordsFromFile.getWord();
+        wordPrinter = new WordPrinterSimple(wordToGuess);
+        lettersChecker = new LettersChecker(wordToGuess);
+    }
+
+    public void play() throws IOException {
         hangmanPicture.printLifeStatus();
-
-        Words wordsFromFile = new Words(new WordsFromFile(), new RandomWordChoose());
-        String wordToGuess = wordsFromFile.getWord();
-
         System.out.println(wordToGuess);
 
-        LetterReader letterReader = new LetterReader();
+        String guessedChars = "";
 
-        WordPrinter wordPrinter = new WordPrinterSimple(wordToGuess);
-        String guessedChars = new String("");
-
-        LettersChecker lettersChecker = new LettersChecker(wordToGuess);
-
-        String ch = letterReader.getLetterFromUser();
+        String letter = letterReader.getLetterFromUser();
         while (hangmanPicture.isAlive()) {
-            if (lettersChecker.doesContainALetter(ch)) {
+            if (lettersChecker.doesContainALetter(letter)) {
                 // print word with guessed chars
-                guessedChars = guessedChars.concat(ch);
+                guessedChars = guessedChars.concat(letter);
                 wordPrinter.print(guessedChars);
                 boolean allGuessed = lettersChecker.allGuessed(guessedChars);
                 if (allGuessed) {
                     break;
                 }
-
             } else {
                 hangmanPicture.oneLifeLost();
                 hangmanPicture.printLifeStatus();
@@ -47,13 +53,17 @@ public class Hangman {
             if (!hangmanPicture.isAlive()) {
                 break;
             }
-            ch = letterReader.getLetterFromUser();
+            letter = letterReader.getLetterFromUser();
         }
 
         if (!hangmanPicture.isAlive()) {
-            System.out.println("Przegrałeś!");
+            System.out.println("You have lost! :-(");
         } else {
-            System.out.println("Wygrałeś!");
+            System.out.println("You have won! :-)");
         }
+    }
+
+    public void setUpBeforeClose() {
+        letterReader.closeScanner();
     }
 }
