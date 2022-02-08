@@ -3,7 +3,7 @@ package pl.edu.agh.hangman.tools;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class LetterUserInputProvider {
+public class LetterReader {
     private static final String USER_PROMPT = "guess> ";
     private Scanner scanner = new Scanner(System.in);
 
