@@ -6,31 +6,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordsFromFile implements WordsProvider{
+public class WordsFromFile implements WordsProvider {
     public final String filepath = "src/main/resources/slowa.txt";
 
     @Override
-    public List<String> getWords() throws IOException {
-        // read words file:
+    public List<String> getWords() {
         List<String> words = new ArrayList<>();
-        BufferedReader br = new BufferedReader(new FileReader(filepath));
-        try {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                words.add(line.toUpperCase());
-                line = br.readLine();
+        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (hasNoProperWord(line)) {
+                    continue;
+                }
+                words.add(line.trim().toUpperCase());
             }
-            String everything = sb.toString();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            br.close();
         }
-
         return words;
+    }
+
+    private boolean hasNoProperWord(String line) {
+        return line.isEmpty() || line.matches("[0-9_\\-\\+]+");
     }
 }

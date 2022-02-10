@@ -5,7 +5,7 @@ import java.util.List;
 
 public class WordsFromWORDNIK implements WordsProvider {
     @Override
-    public List<String> getWords() throws IOException {
+    public List<String> getWords() {
         //TODO read words from http://api.wordnik.com
         return null;
     }

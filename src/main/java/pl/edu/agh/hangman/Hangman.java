@@ -63,7 +63,7 @@ class Hangman {
             System.out.println("You have won! :-)");
         } else {
             System.out.println("You have lost! :-(");
-            System.out.printf("This was %s.", wordToGuess);
+            System.out.printf("This was %s", wordToGuess);
         }
     }
 

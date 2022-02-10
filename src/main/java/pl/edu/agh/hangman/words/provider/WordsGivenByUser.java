@@ -5,7 +5,7 @@ import java.util.List;
 
 public class WordsGivenByUser implements WordsProvider {
     @Override
-    public List<String> getWords() throws IOException {
+    public List<String> getWords() {
         //TODO example: Scanner -> read word from user
         return null;
     }
