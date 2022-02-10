@@ -66,6 +66,11 @@ public class HangmanPicture implements PlayerStatus {
     }
 
     @Override
+    public void printLogo() {
+        System.out.println(HANGMANPICS[MAX_GUESSES]);
+    }
+
+    @Override
     public void oneLifeLost() {
         currentWordGuessCounter++;
     }
@@ -88,5 +93,11 @@ public class HangmanPicture implements PlayerStatus {
     @Override
     public boolean isWinner() {
         return hasPlayerWon;
+    }
+
+    @Override
+    public void setFullLifes() {
+        currentWordGuessCounter = 0;
+        hasPlayerWon = false;
     }
 }

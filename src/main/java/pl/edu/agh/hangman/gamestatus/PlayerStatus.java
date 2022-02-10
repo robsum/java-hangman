@@ -3,6 +3,8 @@ package pl.edu.agh.hangman.gamestatus;
 public interface PlayerStatus {
     void printLifes();
 
+    void printLogo();
+
     void oneLifeLost();
 
     boolean hasLifeToPlay();
@@ -12,4 +14,6 @@ public interface PlayerStatus {
     void setLost();
 
     boolean isWinner();
+
+    void setFullLifes();
 }

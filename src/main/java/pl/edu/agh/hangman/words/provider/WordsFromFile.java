@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WordsFromFile implements WordsProvider {
-    public final String filepath = "src/main/resources/slowa.txt";
+    public final String filepath;
+
+    public WordsFromFile(String filePath) {
+        this.filepath = filePath;
+    }
 
     @Override
     public List<String> getWords() {

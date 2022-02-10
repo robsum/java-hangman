@@ -14,6 +14,11 @@ public class LetterReader {
         return String.valueOf(ch);
     }
 
+    public void pressAnyKeyToContinue(){
+        System.out.println("Press any ket to continue...");
+        scanner.nextLine();
+    }
+
     public void closeScanner() {
         scanner.close();
     }
