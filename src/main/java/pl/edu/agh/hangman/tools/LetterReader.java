@@ -6,7 +6,7 @@ public class LetterReader {
     private static final String USER_PROMPT = "guess> ";
     private Scanner scanner = new Scanner(System.in);
 
-    public String getLetterFromUser() {
+    public String getFromUser() {
         System.out.println(USER_PROMPT);
         return scanner.nextLine().toUpperCase().substring(0, 1);
     }

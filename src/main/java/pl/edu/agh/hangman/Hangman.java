@@ -3,7 +3,7 @@ package pl.edu.agh.hangman;
 import pl.edu.agh.hangman.gamestatus.PlayerStatus;
 import pl.edu.agh.hangman.gamestatus.HangmanPicture;
 import pl.edu.agh.hangman.tools.LetterReader;
-import pl.edu.agh.hangman.tools.LettersChecker;
+import pl.edu.agh.hangman.tools.WordToGuess;
 import pl.edu.agh.hangman.words.*;
 import pl.edu.agh.hangman.words.choose.WordsChooseStrategy;
 import pl.edu.agh.hangman.words.printer.WordPrinter;
@@ -13,11 +13,10 @@ import pl.edu.agh.hangman.words.provider.WordsProvider;
 class Hangman {
     private GameSettings gameSettings = new GameSettings(this);
     private PlayerStatus playerStatus = new HangmanPicture();
-    private Words wordsFromFile;
+    private WordToGuess wordToGuess;
+    private Words words;
     private final LetterReader letterReader = new LetterReader();
     private WordPrinter wordPrinter;
-    private LettersChecker lettersChecker;
-    private String wordToGuess;
 
     public void showWelcomeScreen() {
         System.out.println("\n..:THE HANGMAN GAME:..");
@@ -29,10 +28,9 @@ class Hangman {
     }
 
     void setUpGame(WordsProvider wordsProvider, WordsChooseStrategy wordsChooseStrategy) {
-        this.wordsFromFile = new Words(wordsProvider, wordsChooseStrategy);
-        wordToGuess = wordsFromFile.getWord();
-        wordPrinter = new WordPrinterSimple(wordToGuess);
-        lettersChecker = new LettersChecker(wordToGuess);
+        this.words = new Words(wordsProvider, wordsChooseStrategy);
+        wordToGuess = new WordToGuess(words.getWord());
+        wordPrinter = new WordPrinterSimple(wordToGuess.toString());
     }
 
     void showStartingGameScreen() {
@@ -43,23 +41,23 @@ class Hangman {
 
     void play() {
         System.out.println(wordToGuess);
-        String allLetters = "";
-        String currentLetter;
+        String userLetters = "";
+        String givenLetter;
         wordPrinter.print("");
         do {
-            currentLetter = letterReader.getLetterFromUser();
-            if (lettersChecker.doesContainALetter(currentLetter)) {
-                allLetters = allLetters.concat(currentLetter);
+            givenLetter = letterReader.getFromUser();
+            if (wordToGuess.contains(givenLetter)) {
                 playerStatus.printLifes();
-                wordPrinter.print(allLetters);
-                if (lettersChecker.allGuessed(allLetters)) {
+                userLetters = userLetters.concat(givenLetter);
+                wordPrinter.print(userLetters);
+                if (wordToGuess.canBeCreatedBy(userLetters)) {
                     playerStatus.setWon();
                     return;
                 }
             } else {
                 playerStatus.oneLifeLost();
                 playerStatus.printLifes();
-                wordPrinter.print(allLetters);
+                wordPrinter.print(userLetters);
             }
         } while (playerStatus.hasLifeToPlay());
         playerStatus.setLost();
