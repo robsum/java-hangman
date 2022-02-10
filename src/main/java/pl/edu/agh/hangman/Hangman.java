@@ -42,6 +42,7 @@ class Hangman {
     }
 
     void play() {
+        System.out.println(wordToGuess);
         String allLetters = "";
         String currentLetter;
         wordPrinter.print("");

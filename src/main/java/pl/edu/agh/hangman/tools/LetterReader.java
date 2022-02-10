@@ -1,6 +1,5 @@
 package pl.edu.agh.hangman.tools;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 public class LetterReader {
@@ -9,12 +8,10 @@ public class LetterReader {
 
     public String getLetterFromUser() {
         System.out.println(USER_PROMPT);
-        char ch = scanner.next().toUpperCase(Locale.ROOT).charAt(0);
-        scanner.nextLine();
-        return String.valueOf(ch);
+        return scanner.nextLine().toUpperCase().substring(0, 1);
     }
 
-    public void pressAnyKeyToContinue(){
+    public void pressAnyKeyToContinue() {
         System.out.println("Press any ket to continue...");
         scanner.nextLine();
     }
