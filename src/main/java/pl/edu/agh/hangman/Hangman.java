@@ -10,7 +10,7 @@ import pl.edu.agh.hangman.words.printer.WordPrinterSimple;
 import pl.edu.agh.hangman.words.choose.RandomWordChoose;
 import pl.edu.agh.hangman.words.provider.WordsFromFile;
 
-public class Hangman {
+class Hangman {
     private PlayerStatus playerStatus;
     private Words wordsFromFile;
     private LetterReader letterReader;
@@ -18,7 +18,7 @@ public class Hangman {
     private LettersChecker lettersChecker;
     private String wordToGuess;
 
-    public void setUpBeforePlay() {
+    void setUpBeforePlay() {
         playerStatus = new HangmanPicture();
         wordsFromFile = new Words(new WordsFromFile(), new RandomWordChoose());
         letterReader = new LetterReader();
@@ -28,18 +28,20 @@ public class Hangman {
         lettersChecker = new LettersChecker(wordToGuess);
     }
 
-    public void showStartingScreen() {
+    void showStartingScreen() {
+        System.out.println("You have 6 lifes - play the hangman.");
         playerStatus.printLifes();
-        System.out.printf("//%s//\n",wordToGuess); //FIXME hide this line
     }
 
-    public void play() {
+    void play() {
         String allLetters = "";
-        String currentLetter = "";
+        String currentLetter;
+        wordPrinter.print("");
         do {
             currentLetter = letterReader.getLetterFromUser();
             if (lettersChecker.doesContainALetter(currentLetter)) {
                 allLetters = allLetters.concat(currentLetter);
+                playerStatus.printLifes();
                 wordPrinter.print(allLetters);
                 if (lettersChecker.allGuessed(allLetters)) {
                     playerStatus.setWon();
@@ -48,22 +50,24 @@ public class Hangman {
             } else {
                 playerStatus.oneLifeLost();
                 playerStatus.printLifes();
+                wordPrinter.print(allLetters);
             }
         } while (playerStatus.hasLifeToPlay());
         playerStatus.setLost();
     }
 
-    public void printSummary() {
+    void printSummary() {
         System.out.println("------------------------\n");
         playerStatus.printLifes();
         if (playerStatus.isWinner()) {
             System.out.println("You have won! :-)");
         } else {
             System.out.println("You have lost! :-(");
+            System.out.printf("This was %s.", wordToGuess);
         }
     }
 
-    public void setUpBeforeClose() {
+    void setUpBeforeClose() {
         letterReader.closeScanner();
     }
 }
