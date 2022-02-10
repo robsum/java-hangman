@@ -96,7 +96,7 @@ public class HangmanPicture implements PlayerStatus {
     }
 
     @Override
-    public void setFullLifes() {
+    public void resetToInitialState() {
         currentWordGuessCounter = 0;
         hasPlayerWon = false;
     }

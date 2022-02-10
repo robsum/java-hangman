@@ -15,5 +15,5 @@ public interface PlayerStatus {
 
     boolean isWinner();
 
-    void setFullLifes();
+    void resetToInitialState();
 }

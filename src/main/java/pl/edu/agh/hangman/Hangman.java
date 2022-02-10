@@ -35,12 +35,13 @@ class Hangman {
 
     void showStartingGameScreen() {
         System.out.println("You have 6 lifes - lets play the hangman game...");
+
+        playerStatus.resetToInitialState();
+        playerStatus.printLifes();
+        wordPrinter.print("");
     }
 
     void play() {
-        playerStatus.setFullLifes();
-        playerStatus.printLifes();
-        wordPrinter.print("");
         System.out.println(wordToGuess); // FIXME delete this
         StringBuilder userLetters = new StringBuilder();
         String givenLetter;
@@ -48,20 +49,16 @@ class Hangman {
             givenLetter = letterReader.getFromUser();
             if (wordToGuess.contains(givenLetter)
                     && !userLetters.toString().matches(".*" + givenLetter + ".*")) {
-                playerStatus.printLifes();
                 userLetters.append(givenLetter);
-                wordPrinter.print(userLetters.toString());
                 if (wordToGuess.canBeCreatedBy(userLetters.toString())) {
                     playerStatus.setWon();
-                    return;
                 }
             } else {
                 playerStatus.oneLifeLost();
-                playerStatus.printLifes();
-                wordPrinter.print(userLetters.toString());
             }
-        } while (playerStatus.hasLifeToPlay());
-        playerStatus.setLost();
+            playerStatus.printLifes();
+            wordPrinter.print(userLetters.toString());
+        } while (playerStatus.hasLifeToPlay() && !playerStatus.isWinner());
     }
 
     void printSummary() {
