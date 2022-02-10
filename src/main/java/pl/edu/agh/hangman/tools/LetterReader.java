@@ -7,8 +7,14 @@ public class LetterReader {
     private Scanner scanner = new Scanner(System.in);
 
     public String getFromUser() {
-        System.out.println(USER_PROMPT);
-        return scanner.nextLine().toUpperCase().substring(0, 1);
+        while (true) {
+            System.out.println(USER_PROMPT);
+            String userData = scanner.nextLine();
+            if (userData.isEmpty()) {
+                continue;
+            }
+            return userData.toUpperCase().substring(0, 1);
+        }
     }
 
     public void pressAnyKeyToContinue() {
