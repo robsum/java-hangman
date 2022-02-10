@@ -46,7 +46,8 @@ class Hangman {
         String givenLetter;
         do {
             givenLetter = letterReader.getFromUser();
-            if (wordToGuess.contains(givenLetter)) {
+            if (wordToGuess.contains(givenLetter)
+                    && !userLetters.toString().matches(".*" + givenLetter + ".*")) {
                 playerStatus.printLifes();
                 userLetters.append(givenLetter);
                 wordPrinter.print(userLetters.toString());
