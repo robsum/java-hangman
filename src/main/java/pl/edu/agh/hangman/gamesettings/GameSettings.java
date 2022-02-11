@@ -1,5 +1,6 @@
-package pl.edu.agh.hangman;
+package pl.edu.agh.hangman.gamesettings;
 
+import pl.edu.agh.hangman.Hangman;
 import pl.edu.agh.hangman.words.choose.RandomWordChoose;
 import pl.edu.agh.hangman.words.provider.WordsFromFile;
 

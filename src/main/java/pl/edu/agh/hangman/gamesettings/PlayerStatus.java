@@ -1,4 +1,4 @@
-package pl.edu.agh.hangman.gamestatus;
+package pl.edu.agh.hangman.gamesettings;
 
 public interface PlayerStatus {
     void printLifes();

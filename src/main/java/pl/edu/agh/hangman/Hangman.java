@@ -1,7 +1,8 @@
 package pl.edu.agh.hangman;
 
-import pl.edu.agh.hangman.gamestatus.PlayerStatus;
-import pl.edu.agh.hangman.gamestatus.HangmanPicture;
+import pl.edu.agh.hangman.gamesettings.GameSettings;
+import pl.edu.agh.hangman.gamesettings.PlayerStatus;
+import pl.edu.agh.hangman.gamesettings.HangmanPicture;
 import pl.edu.agh.hangman.tools.LetterReader;
 import pl.edu.agh.hangman.tools.WordToGuess;
 import pl.edu.agh.hangman.words.*;
@@ -10,7 +11,7 @@ import pl.edu.agh.hangman.words.printer.WordPrinter;
 import pl.edu.agh.hangman.words.printer.WordPrinterSimple;
 import pl.edu.agh.hangman.words.provider.WordsProvider;
 
-class Hangman {
+public class Hangman {
     private GameSettings gameSettings = new GameSettings(this);
     private PlayerStatus playerStatus = new HangmanPicture();
     private WordToGuess wordToGuess;
@@ -18,7 +19,7 @@ class Hangman {
     private final LetterReader letterReader = new LetterReader();
     private WordPrinter wordPrinter;
 
-    public void showWelcomeScreen() {
+    void showWelcomeScreen() {
         System.out.println("\n..:THE HANGMAN GAME:..");
         playerStatus.printLogo();
     }
@@ -27,7 +28,7 @@ class Hangman {
         gameSettings.run();
     }
 
-    void setUpGame(WordsProvider wordsProvider, WordsChooseStrategy wordsChooseStrategy) {
+    public void setUpGame(WordsProvider wordsProvider, WordsChooseStrategy wordsChooseStrategy) {
         this.words = new Words(wordsProvider, wordsChooseStrategy);
         wordToGuess = new WordToGuess(words.getWord());
         wordPrinter = new WordPrinterSimple(wordToGuess.toString());
@@ -73,7 +74,7 @@ class Hangman {
         letterReader.pressAnyKeyToContinue();
     }
 
-    void setUpBeforeCloseTheGame() {
+    public void setUpBeforeCloseTheGame() {
         letterReader.closeScanner();
     }
 
