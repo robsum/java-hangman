@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WordsFromFile implements WordsProvider {
-    public final String filepath;
+    private final String filepath;
 
     public WordsFromFile(String filePath) {
         this.filepath = filePath;
