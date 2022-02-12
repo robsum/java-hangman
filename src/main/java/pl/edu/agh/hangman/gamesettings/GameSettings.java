@@ -7,6 +7,8 @@ import pl.edu.agh.hangman.words.provider.WordsFromFile;
 import java.util.Scanner;
 
 public class GameSettings {
+    private static final String DEFAULT_LIBRARY_OF_WORDS_FILE_PATH =
+            "./src/main/resources/slowa.txt";
     private final Hangman hangman;
     private Scanner scanner = new Scanner(System.in);
 
@@ -42,19 +44,20 @@ public class GameSettings {
                     }
                     break;
                 }
-                case 'E' : {
+                case 'E': {
                     hangman.setUpBeforeCloseTheGame();
                     hangman.endGame();
                 }
                 default: {
                     hangman.setUpGame(
-                            new WordsFromFile("./src/main/resources/slowa.txt"),
+                            new WordsFromFile(DEFAULT_LIBRARY_OF_WORDS_FILE_PATH),
                             new RandomWordChoose());
                     return;
                 }
             }
         }
     }
+
     private String readDataFromUser(String message) {
         System.out.print(message);
         return scanner.nextLine();
