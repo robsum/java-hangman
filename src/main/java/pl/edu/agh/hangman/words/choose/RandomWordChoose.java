@@ -1,15 +1,18 @@
 package pl.edu.agh.hangman.words.choose;
 
 import java.util.List;
+import java.util.Random;
 
 public class RandomWordChoose implements WordsChooseStrategy {
-    @Override
-    public String getWord(List<String> words) {
-        int index = getRandomNumber(0, words.size());
-        return words.get(index);
+    private final Random random;
+
+    public RandomWordChoose() {
+        this.random = new Random();
     }
 
-    public static int getRandomNumber(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
+    @Override
+    public String getWord(List<String> words) {
+        int id = random.nextInt(words.size());
+        return words.get(id);
     }
 }
