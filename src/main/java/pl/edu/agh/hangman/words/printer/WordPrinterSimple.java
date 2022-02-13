@@ -1,8 +1,11 @@
 package pl.edu.agh.hangman.words.printer;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class WordPrinterSimple implements WordPrinter {
     private static final char HIDDEN_LETTER = '_';
+    private static final String LETTERS_SEPARATOR = " ";
     private final String word;
 
     public WordPrinterSimple(String word) {
@@ -10,24 +13,29 @@ public class WordPrinterSimple implements WordPrinter {
     }
 
     @Override
-    public void print(String givenLettersToCheck) {
-        char[] lettersToPrint = new char[word.length()];
-        for (int i = 0; i < lettersToPrint.length; i++) {
-            lettersToPrint[i] = HIDDEN_LETTER;
-        }
-
-        char[] wordLetters = word.toCharArray();
-
-        for (int i = 0; i < wordLetters.length; i++) {
-            char letterInWord = wordLetters[i];
-            if (givenLettersToCheck.toUpperCase().contains(String.valueOf(letterInWord))) {
-                lettersToPrint[i] = letterInWord;
-            }
-        }
-
-        for (char letter : lettersToPrint) {
-            System.out.print(" " + letter + " ");
-        }
+    public void print(String letters) {
+        StringBuilder wordToPrint = getWordToPrint(letters);
+        System.out.println(wordToPrint.toString());
         System.out.println();
+    }
+
+    private StringBuilder getWordToPrint(String letters) {
+        StringBuilder wordToPrint = new StringBuilder();
+        word.chars().forEach(letter -> {
+                    if (exists((char) letter, letters)) {
+                        wordToPrint.append((char) letter);
+                    } else {
+                        wordToPrint.append(HIDDEN_LETTER);
+                    }
+                    wordToPrint.append(LETTERS_SEPARATOR);
+                }
+        );
+        return wordToPrint;
+    }
+
+    private boolean exists(char letter, String inLetters) {
+        Pattern pattern = Pattern.compile(String.valueOf(letter));
+        Matcher matcher = pattern.matcher(inLetters.toUpperCase());
+        return matcher.find();
     }
 }

@@ -1,26 +1,24 @@
 package pl.edu.agh.hangman;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class QuickTestOnly {
     public static void main(String[] args) {
-        List<String> words = new ArrayList<>();
-        words.add("Alicja 1");
-        words.add("Alicja 2");
-        words.add("Alicja 3");
-        words.add("Alicja 4");
+        StringBuilder wordToPrint = new StringBuilder();
+        String word = "Ala ma kota";
+        String letters = "abca xcosk";
 
-        Random random = new Random();
+        word.toUpperCase().chars().forEach(c -> {
+                    char letterInWord = (char) c;
+                    if(Pattern.compile(String.valueOf(letterInWord)).matcher(letters.toUpperCase()).find()) {
+                        wordToPrint.append(letterInWord + " ");
+                    } else {
+                        wordToPrint.append(" _ ");
+                    }
+                }
+        );
 
-        for (int i = 1; i <= 50; i++) {
-            int id = random.nextInt(words.size());
-//            System.out.printf("size = %d.  id = %d\n", words.size(), id);
-            String word = words.get(id);
-            System.out.printf("Word: %s\n", word);
-        }
-
-
+        System.out.println(wordToPrint.toString());
     }
 }
