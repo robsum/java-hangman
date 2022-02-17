@@ -223,6 +223,7 @@ public class GameSettings {
                     case "P": {
                         System.out.println("\t\t\tExited from main menu.");
                         System.out.println("--------------------------------");
+                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                         return true;
                     }
                 }
