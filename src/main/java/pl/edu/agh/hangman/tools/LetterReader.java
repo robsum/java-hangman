@@ -18,7 +18,7 @@ public class LetterReader {
     }
 
     public void pressAnyKeyToContinue() {
-        System.out.println("Press any ket to continue...");
+        System.out.println("Press any key to continue...");
         scanner.nextLine();
     }
 
