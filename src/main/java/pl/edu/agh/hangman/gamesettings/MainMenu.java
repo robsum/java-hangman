@@ -49,6 +49,17 @@ public abstract class MainMenu extends SettingsMenu {
     }
 
     @Override
+    public void setUserChoise(String word) {
+        this.userChoise = word;
+    }
+
+    @Override
+    public String getDataFromUser(String message) {
+        System.out.println(message);
+        return scanner.nextLine();
+    }
+
+    @Override
     public String getUserChoice() {
         return userChoise;
     }

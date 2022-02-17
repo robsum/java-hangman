@@ -12,6 +12,7 @@ import pl.edu.agh.hangman.words.provider.WordsProvider;
 import sun.tools.jar.Main;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class GameSettings {
@@ -39,7 +40,7 @@ public class GameSettings {
                 }
                 int wordLength = Integer.valueOf(givenLength);
                 wordsChooseStrategy = new ByLengthWordChoose(wordLength);
-                System.out.printf("\t\t\tWords by given length of %d were set up.", wordLength);
+                System.out.printf("\t\t\tWords by given length of %d were set up.\n", wordLength);
                 return true;
             }
         };
@@ -84,6 +85,38 @@ public class GameSettings {
                 "\t\t   2: by length\n" +
                 "\t\t   3: from first to last");
 
+        SubMenu submenuWordsProviderGivenByUser = new SubMenu("wordsProvider-givenByUser") {
+            @Override
+            public boolean doWhatUserHaveChosen() {
+                StringBuilder words = new StringBuilder();
+
+                int wordId = 1;
+                while (true) {
+                    String wordFromUser = getDataFromUser("\t\t\tWord " + wordId++ + ": (EXIT for terminate)");
+                    String word = wordFromUser.toUpperCase();
+                    if (word.equals("EXIT")) {
+                        break;
+                    }
+                    if (!word.matches("[A-Z ĄŚĆŻŹÓŁŃĘ]+")) {
+                        System.out.println("\t\t! Given word is wrong. Must be letters only. This word will not be added.");
+                        wordId--;
+                        continue;
+                    }
+                    words.append(word + ",");
+                }
+
+                if (words.length() == 0) {
+                    words.append("NO WORDS,");
+                }
+
+                words.replace(words.length() - 1, words.length(), "");
+                this.setUserChoise(words.toString());
+
+                return true;
+            }
+        };
+
+        submenuWordsProviderGivenByUser.setContent("\tGive words (write EXIT for stop):\n");
 
         MainMenu menuWordsProvider = new MainMenu("wordsProvider") {
             @Override
@@ -104,12 +137,20 @@ public class GameSettings {
                     }
                     case "3": {
                         // given by User
-                        //TODO put here another submenu in order to read words
+                        SettingsMenu subMenu = this.getSubMenu(submenuWordsProviderGivenByUser.getName());
+                        subMenu.print();
+                        subMenu.doWhatUserHaveChosen();
+
+                        String userChoice = subMenu.getUserChoice();
+
                         ArrayList<String> words = new ArrayList<>();
-                        words.add("Ala".toUpperCase());
-                        words.add("kotek".toUpperCase());
+                        String[] split = userChoice.split(",");
+                        for (String word : split) {
+                            words.add(word);
+                        }
+
                         wordsProvider = new WordsGivenByUser(words);
-                        System.out.println("\t\t\tWords from user were set up.");
+                        System.out.printf("\t\t\tWords from user were set up: %s\n", words.toString());
                         return true;
                     }
                 }
@@ -120,6 +161,8 @@ public class GameSettings {
                 "\t\t>> 1: game library\n" +
                 "\t\t   2: page Wordnik\n" +
                 "\t\t   3: given by User");
+
+        menuWordsProvider.addSubMenu(submenuWordsProviderGivenByUser.getName(), submenuWordsProviderGivenByUser);
 
         MainMenu mainMenu = new MainMenu("main") {
             @Override

@@ -9,6 +9,10 @@ public abstract class SettingsMenu {
 
     public abstract void setUserChoiceAsFirstLetterByReadingFromInput(String message);
 
+    public abstract void setUserChoise(String word);
+
+    public abstract String getDataFromUser(String message);
+
     public abstract String getUserChoice();
 
     public abstract String getName();
