@@ -9,6 +9,7 @@ import pl.edu.agh.hangman.words.provider.WordsFromFile;
 import pl.edu.agh.hangman.words.provider.WordsFromWORDNIK;
 import pl.edu.agh.hangman.words.provider.WordsGivenByUser;
 import pl.edu.agh.hangman.words.provider.WordsProvider;
+import sun.tools.jar.Main;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -28,7 +29,24 @@ public class GameSettings {
     }
 
     private void setMainMenu() {
-        SettingsMenu subMenuWordChooseStrategy = new SubMenu("wordChoose") {
+        SettingsMenu subMenuWordChooseStrategyByLengthWord = new SubMenu("wordChoose-byLengthWord") {
+            @Override
+            public boolean doWhatUserHaveChosen() {
+                String givenLength = getUserChoice();
+                if (!givenLength.matches("[0-9]+")) {
+                    System.out.println("! Given length is wrong - must be positive number > 0.\n");
+                    return false;
+                }
+                int wordLength = Integer.valueOf(givenLength);
+                wordsChooseStrategy = new ByLengthWordChoose(wordLength);
+                System.out.printf("\t\t\tWords by given length of %d were set up.", wordLength);
+                return true;
+            }
+        };
+
+        subMenuWordChooseStrategyByLengthWord.setContent("\t\tWord length:");
+
+        MainMenu menuWordChooseStrategy = new MainMenu("wordChoose") {
             @Override
             public boolean doWhatUserHaveChosen() {
                 switch (getUserChoice()) {
@@ -40,10 +58,12 @@ public class GameSettings {
                     }
                     case "2": {
                         // by length
-                        //TODO add submenu here in order to get word length
-                        int wordLength = 5;
-                        wordsChooseStrategy = new ByLengthWordChoose(wordLength);
-                        System.out.println("\t\t\tWords by given length were set up.");
+                        SettingsMenu subMenu = this.getSubMenu(subMenuWordChooseStrategyByLengthWord.getName());
+
+                        boolean isGivenDataWrong = true;
+                        while (isGivenDataWrong) {
+                            isGivenDataWrong = !subMenu.execute();
+                        }
                         return true;
                     }
                     case "3": {
@@ -57,12 +77,15 @@ public class GameSettings {
             }
         };
 
-        subMenuWordChooseStrategy.setContent("\tSelecting word algorithm:\n" +
+        menuWordChooseStrategy.addSubMenu(subMenuWordChooseStrategyByLengthWord.getName(), subMenuWordChooseStrategyByLengthWord);
+
+        menuWordChooseStrategy.setContent("\tSelecting word algorithm:\n" +
                 "\t\t>> 1: random choice\n" +
                 "\t\t   2: by length\n" +
                 "\t\t   3: from first to last");
 
-        SettingsMenu subMenuWordsProvider = new SubMenu("wordsProvider") {
+
+        MainMenu menuWordsProvider = new MainMenu("wordsProvider") {
             @Override
             public boolean doWhatUserHaveChosen() {
                 switch (getUserChoice()) {
@@ -93,7 +116,7 @@ public class GameSettings {
                 return false;
             }
         };
-        subMenuWordsProvider.setContent("\tSelect words provider:\n" +
+        menuWordsProvider.setContent("\tSelect words provider:\n" +
                 "\t\t>> 1: game library\n" +
                 "\t\t   2: page Wordnik\n" +
                 "\t\t   3: given by User");
@@ -106,7 +129,7 @@ public class GameSettings {
                         // word algorithm
                         boolean doneCorrectly = false;
                         do {
-                            doneCorrectly = getSubMenu(subMenuWordChooseStrategy.getName()).execute();
+                            doneCorrectly = getSubMenu(menuWordChooseStrategy.getName()).execute();
                         } while (!doneCorrectly);
                         return false;
                     }
@@ -114,7 +137,7 @@ public class GameSettings {
                         // words provider
                         boolean doneCorrectly = false;
                         do {
-                            doneCorrectly = getSubMenu(subMenuWordsProvider.getName()).execute();
+                            doneCorrectly = getSubMenu(menuWordsProvider.getName()).execute();
                         } while (!doneCorrectly);
                         return false;
                     }
@@ -131,8 +154,8 @@ public class GameSettings {
                 "\t\t1: selecting word algorithm\n" +
                 "\t\t2: selecting words provider\n" +
                 "\t\tP: play");
-        mainMenu.addSubMenu(subMenuWordChooseStrategy.getName(), subMenuWordChooseStrategy);
-        mainMenu.addSubMenu(subMenuWordsProvider.getName(), subMenuWordsProvider);
+        mainMenu.addSubMenu(menuWordChooseStrategy.getName(), menuWordChooseStrategy);
+        mainMenu.addSubMenu(menuWordsProvider.getName(), menuWordsProvider);
 
         this.settingsMenu = mainMenu;
     }
