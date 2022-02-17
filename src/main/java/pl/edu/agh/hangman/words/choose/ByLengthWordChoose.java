@@ -12,7 +12,7 @@ public class ByLengthWordChoose implements WordsChooseStrategy {
     }
 
     @Override
-    public String getWord(List<String> words) {
+    public String getWord(List<String> words) throws NoWordFoundException {
         // TODO this is quick implementation for test only
         if(words.size() == 0 ) {
             //FIXME later

@@ -6,6 +6,7 @@ import pl.edu.agh.hangman.gamesettings.HangmanPicture;
 import pl.edu.agh.hangman.tools.LetterReader;
 import pl.edu.agh.hangman.tools.WordToGuess;
 import pl.edu.agh.hangman.words.*;
+import pl.edu.agh.hangman.words.choose.NoWordFoundException;
 import pl.edu.agh.hangman.words.choose.WordsChooseStrategy;
 import pl.edu.agh.hangman.words.printer.WordPrinter;
 import pl.edu.agh.hangman.words.printer.WordPrinterSimple;
@@ -30,7 +31,14 @@ public class Hangman {
 
     public void setUpGame(WordsProvider wordsProvider, WordsChooseStrategy wordsChooseStrategy) {
         this.words = new Words(wordsProvider, wordsChooseStrategy);
-        wordToGuess = new WordToGuess(words.getWord());
+        try {
+            wordToGuess = new WordToGuess(words.getWord());
+        } catch (NoWordFoundException e) {
+            System.out.println("\t\t\t\t" + e.getMessage());
+            System.out.println("\t\t\t\tFix it some how in settings.");
+            showGameMenu();
+            return;
+        }
         wordPrinter = new WordPrinterSimple(wordToGuess.toString());
     }
 

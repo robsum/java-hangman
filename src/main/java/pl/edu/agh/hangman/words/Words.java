@@ -1,5 +1,6 @@
 package pl.edu.agh.hangman.words;
 
+import pl.edu.agh.hangman.words.choose.NoWordFoundException;
 import pl.edu.agh.hangman.words.choose.WordsChooseStrategy;
 import pl.edu.agh.hangman.words.provider.WordsProvider;
 
@@ -20,7 +21,7 @@ public class Words {
         words = wordsProvider.getWords();
     }
 
-    public String getWord() {
+    public String getWord() throws NoWordFoundException {
         return wordsChooseStrategy.getWord(words);
     }
 }
