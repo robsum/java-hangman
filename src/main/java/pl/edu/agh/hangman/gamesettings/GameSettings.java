@@ -9,10 +9,8 @@ import pl.edu.agh.hangman.words.provider.WordsFromFile;
 import pl.edu.agh.hangman.words.provider.WordsFromWORDNIK;
 import pl.edu.agh.hangman.words.provider.WordsGivenByUser;
 import pl.edu.agh.hangman.words.provider.WordsProvider;
-import sun.tools.jar.Main;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class GameSettings {
@@ -33,12 +31,13 @@ public class GameSettings {
         SettingsMenu subMenuWordChooseStrategyByLengthWord = new SubMenu("wordChoose-byLengthWord") {
             @Override
             public boolean doWhatUserHaveChosen() {
-                String givenLength = getUserChoice();
+                String givenLength = getDataFromUser("\t\tWord length:\n>>");
                 if (!givenLength.matches("[0-9]+")) {
                     System.out.println("! Given length is wrong - must be positive number > 0.\n");
                     return false;
                 }
                 int wordLength = Integer.valueOf(givenLength);
+                this.setUserChoise(givenLength);
                 wordsChooseStrategy = new ByLengthWordChoose(wordLength);
                 System.out.printf("\t\t\tWords by given length of %d were set up.\n", wordLength);
                 return true;
@@ -55,6 +54,12 @@ public class GameSettings {
                         // random choice
                         wordsChooseStrategy = new RandomWordChoose();
                         System.out.println("\t\t\tRandom choice was set up.");
+
+                        this.setContent("\tSelecting word algorithm:\n" +
+                                "\t\t>> 1: random choice\n" +
+                                "\t\t   2: by length\n" +
+                                "\t\t   3: from first to last");
+
                         return true;
                     }
                     case "2": {
@@ -63,18 +68,31 @@ public class GameSettings {
 
                         boolean isGivenDataWrong = true;
                         while (isGivenDataWrong) {
-                            isGivenDataWrong = !subMenu.execute();
+                            isGivenDataWrong = !subMenu.doWhatUserHaveChosen();
                         }
+
+                        this.setContent("\tSelecting word algorithm:\n" +
+                                "\t\t   1: random choice\n" +
+                                "\t\t>> 2: by length (" + subMenu.getUserChoice() + ")\n" +
+                                "\t\t   3: from first to last");
                         return true;
                     }
                     case "3": {
                         // first given step by step
                         wordsChooseStrategy = new FirstGivenWordChoose();
                         System.out.println("\t\t\tWords by first order were set up.");
+
+                        this.setContent("\tSelecting word algorithm:\n" +
+                                "\t\t   1: random choice\n" +
+                                "\t\t   2: by length\n" +
+                                "\t\t>> 3: from first to last");
+                        return true;
+                    }
+                    default: {
+                        System.out.println("\t\t\t\t(went back)");
                         return true;
                     }
                 }
-                return false;
             }
         };
 
@@ -126,6 +144,11 @@ public class GameSettings {
                         // default library
                         wordsProvider = new WordsFromFile(DEFAULT_LIBRARY_OF_WORDS_FILE_PATH);
                         System.out.println("\t\t\tDefault words provider was set up.");
+
+                        this.setContent("\tSelect words provider:\n" +
+                                "\t\t>> 1: game library\n" +
+                                "\t\t   2: page Wordnik\n" +
+                                "\t\t   3: given by User");
                         return true;
                     }
                     case "2": {
@@ -133,6 +156,11 @@ public class GameSettings {
                         //TODO: implement wordnik
                         wordsProvider = new WordsFromWORDNIK();
                         System.out.println("\t\t\tWords from Wordnik were set up.");
+
+                        this.setContent("\tSelect words provider:\n" +
+                                "\t\t   1: game library\n" +
+                                "\t\t>> 2: page Wordnik\n" +
+                                "\t\t   3: given by User");
                         return true;
                     }
                     case "3": {
@@ -151,10 +179,18 @@ public class GameSettings {
 
                         wordsProvider = new WordsGivenByUser(words);
                         System.out.printf("\t\t\tWords from user were set up: %s\n", words.toString());
+
+                        this.setContent("\tSelect words provider:\n" +
+                                "\t\t   1: game library\n" +
+                                "\t\t   2: page Wordnik\n" +
+                                "\t\t>> 3: given by User (" + words.toString() + ")");
+                        return true;
+                    }
+                    default: {
+                        System.out.println("\t\t\t\t(went back)");
                         return true;
                     }
                 }
-                return false;
             }
         };
         menuWordsProvider.setContent("\tSelect words provider:\n" +

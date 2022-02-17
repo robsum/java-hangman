@@ -26,6 +26,10 @@ public abstract class SubMenu extends SettingsMenu {
     public void setUserChoiceAsFirstLetterByReadingFromInput(String message) {
         System.out.print(message);
         String userChoise = scanner.nextLine();
+        if(userChoise.equals("")) {
+            this.userChoise = "0";
+            return;
+        }
         this.userChoise = userChoise.toUpperCase().substring(0, 1);
     }
 

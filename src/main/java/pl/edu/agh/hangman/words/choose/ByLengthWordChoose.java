@@ -22,7 +22,7 @@ public class ByLengthWordChoose implements WordsChooseStrategy {
                 .filter(s -> s.length() == length)
                 .collect(Collectors.toList());
         if(wordsWithGivenLength.size() == 0) {
-            throw new NoWordFoundException("There are no words with such lenght = " + length + ".");
+            throw new NoWordFoundException("There are no words with such length = " + length + ".");
         }
 
         Random random = new Random();
