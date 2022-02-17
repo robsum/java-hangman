@@ -13,7 +13,7 @@ public class FirstGivenWordChoose implements WordsChooseStrategy {
         }
         id++;
         int max = words.size() - 1;
-        if (id >= max) {
+        if (id > max) {
             id = 0;
         }
         return words.get(id);
